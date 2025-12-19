@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automotive Skill Hub - Master Systems Engineering</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+
+<body class="dark-theme">
+    <div class="glow-bg"></div>
+
+    <nav class="navbar glass">
+        <div class="logo">AUTO<span>CORE</span></div>
+        <div class="nav-links">
+            <a href="#dashboard" class="active">Dashboard</a>
+            <a href="#v-model">V-Model</a>
+            <a href="#ecu-view">Hardware</a>
+            <a href="#vault">Knowledge Vault</a>
+        </div>
+        <div class="nav-status">
+            <span class="status-dot"></span> System Ready
+        </div>
+    </nav>
+
+    <main>
+        <section id="dashboard" class="dashboard-section">
+            <div class="dashboard-header">
+                <h1>Automotive <span class="highlight">Digital Twin</span></h1>
+                <p>Interact with the vehicle modules to explore Systems Engineering & Functional Safety concepts.</p>
+            </div>
+
+            <div class="digital-twin-container">
+                <div class="vehicle-svg-wrapper" id="vehicle-viewport">
+                    <!-- Dashboard Vehicle SVG will be here -->
+                    <div class="hotspot" id="hotspot-adas" style="top: 15%; left: 50%;" data-module="adas">
+                        <div class="hotspot-pulse"></div>
+                        <span class="hotspot-label">ADAS & SOTIF</span>
+                    </div>
+                    <div class="hotspot" id="hotspot-steering" style="top: 35%; left: 35%;" data-module="steering">
+                        <div class="hotspot-pulse"></div>
+                        <span class="hotspot-label">EPS STEERING</span>
+                    </div>
+                    <div class="hotspot" id="hotspot-braking" style="top: 45%; left: 65%;" data-module="braking">
+                        <div class="hotspot-pulse"></div>
+                        <span class="hotspot-label">IBOOSTER & ESC</span>
+                    </div>
+                    <div class="hotspot" id="hotspot-ecu" style="top: 60%; left: 50%;" data-module="ecu">
+                        <div class="hotspot-pulse"></div>
+                        <span class="hotspot-label">SAFETY ECU</span>
+                    </div>
+                    <div class="hotspot" id="hotspot-cyber" style="top: 80%; left: 50%;" data-module="cyber">
+                        <div class="hotspot-pulse"></div>
+                        <span class="hotspot-label">CYBER HYGIENE</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Module Panel -->
+        <section id="module-panel" class="module-panel glass hidden">
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <div id="module-content">
+                <!-- Content injected via JS -->
+            </div>
+        </section>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
