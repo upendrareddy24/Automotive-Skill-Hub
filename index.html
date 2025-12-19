@@ -63,6 +63,65 @@
             </div>
         </section>
 
+        <section id="v-model" class="section glass hidden">
+            <div class="section-header">
+                <h2>Interactive <span class="highlight">V-Model</span></h2>
+                <p>Master ISO 26262 and ASPICE process phases.</p>
+            </div>
+            <div class="v-model-diagram">
+                <div class="v-left">
+                    <div class="v-step" data-info="req">Requirements (SYS.1/SYS.2)</div>
+                    <div class="v-step" data-info="arch">Architecture (SYS.3)</div>
+                    <div class="v-step" data-info="design">SW Design (SWE.1)</div>
+                </div>
+                <div class="v-bottom">
+                    <div class="v-step" data-info="impl">Implementation</div>
+                </div>
+                <div class="v-right">
+                    <div class="v-step" data-info="unit">Unit Test (SWE.4)</div>
+                    <div class="v-step" data-info="sw-int">SW Integration (SWE.5/6)</div>
+                    <div class="v-step" data-info="sys-int">Sys Integration (SYS.4/5)</div>
+                </div>
+            </div>
+            <div id="v-info-panel" class="info-card">
+                <p>Select a phase to see depth Analysis.</p>
+            </div>
+        </section>
+
+        <section id="ecu-view" class="section glass hidden">
+            <div class="section-header">
+                <h2>Hardware <span class="highlight">Deep-Dive</span></h2>
+                <p>Explore ECU internals and Sensor architectures.</p>
+            </div>
+            <div class="hardware-grid">
+                <div class="hardware-main">
+                    <img src="assets/ecu_hardware.png" alt="ECU internals">
+                    <div class="hw-overlays">
+                        <div class="hw-point" style="top: 40%; left: 50%;" data-hw="cpu">CPU</div>
+                        <div class="hw-point" style="top: 20%; left: 20%;" data-hw="pmic">PMIC</div>
+                        <div class="hw-point" style="top: 70%; left: 80%;" data-hw="comms">CAN/ETH</div>
+                    </div>
+                </div>
+                <div id="hw-info" class="info-card">
+                    <h3>Safety Microcontroller</h3>
+                    <p>ASIL-D compliant with Lockstep cores and hardware safety monitors.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="vault" class="section glass hidden">
+            <div class="section-header">
+                <h2>The <span class="highlight">Knowledge Vault</span></h2>
+                <p>Word-for-word analysis from your professional resume.</p>
+            </div>
+            <div class="vault-search">
+                <input type="text" id="vaultSearch" placeholder="Search skill (e.g. HARA, FMEA, TARA, ISO 26262)...">
+            </div>
+            <div class="vault-grid" id="vaultGrid">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
         <!-- Dynamic Module Panel -->
         <section id="module-panel" class="module-panel glass hidden">
             <button class="close-btn"><i class="fas fa-times"></i></button>

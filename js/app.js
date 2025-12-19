@@ -86,7 +86,74 @@ const moduleData = {
     }
 };
 
+const vModelData = {
+    req: {
+        title: "Requirement Engineering (ISO 26262-4 / SYS.1)",
+        content: "Decomposition of Customer Requirements into System Requirements. Using DOORS/Polarion for Full Traceability. Ensuring every SR is verifiable."
+    },
+    arch: {
+        title: "System Architecture (Part 4 / SYS.3)",
+        content: "Defining Functional and Technical Safety Concepts (FSC/TSC). Allocation of requirements to hardware and software components. ASIL-D decomposition."
+    },
+    design: {
+        title: "Software Design (ISO 26262-6 / SWE.1)",
+        content: "Developing detailed design using SysML or ASCET. Focused on freedom from interference and temporal/spatial isolation."
+    },
+    impl: {
+        title: "Implementation (Embedded C / AUTOSAR)",
+        content: "Coding according to MISRA-C standards. Real-time implementation of safety-critical steering/braking algorithms."
+    },
+    unit: {
+        title: "Software Unit Testing (SWE.4)",
+        content: "100% Code Coverage (Statement, Branch, MC/DC). Verification of safety requirements at the unit level."
+    },
+    'sw-int': {
+        title: "SW Integration (SWE.5 / SWE.6)",
+        content: "Testing integrated software modules on Target Hardware. Ensuring signal flow and interface consistency."
+    },
+    'sys-int': {
+        title: "System Integration (SYS.4 / SYS.5)",
+        content: "Vehicle-level validation. Testing ADAS functions in HIL/SIL environments and prototype vehicles."
+    }
+};
+
+const vaultSkills = [
+    { name: "ISO 26262", desc: "International standard for functional safety of road vehicles. Focus on ASIL-D for critical steering and braking systems." },
+    { name: "HARA", desc: "Hazard Analysis and Risk Assessment. Determining Safety Goals and ASIL ratings (A-D) based on Severity, Exposure, and Controllability." },
+    { name: "SOTIF (ISO 21448)", desc: "Safety of the Intended Functionality. Managing risks from functional insufficiencies (e.g. sensor limitations in fog)." },
+    { name: "ASPICE", desc: "Automotive Software Process Improvement and Capability dEtermination. Ensuring high-quality engineering processes (SYS.3, SWE.1, etc.)." },
+    { name: "ISO 21434", desc: "Cybersecurity standard for automotive systems. Establishing a secure lifecycle and performing TARA for threat detection." },
+    { name: "FMEA / FMEDA", desc: "Failure Mode and Effects Analysis. FMEDA provides hardware architectural metrics (SPFM, LFM) for ISO 26262 compliance." },
+    { name: "FTA", desc: "Fault Tree Analysis. Deductive analysis to determine the root cause of a specific system failure." },
+    { name: "EPS Steering", desc: "Electric Power Steering. Design of Fail-Operational architectures and torque plausibility safety mechanisms (ASIL-D)." },
+    { name: "iBooster / ESC", desc: "Electronic Stability Control and Bosch iBooster braking systems. Integration of ADAS request (ACC/AEB) with chassis actuation." }
+];
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Navigation
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('section');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+
+            sections.forEach(s => {
+                if (s.id === targetId) {
+                    s.classList.remove('hidden');
+                    gsap.from(s, { opacity: 0, y: 20, duration: 0.5 });
+                } else if (s.id !== 'module-panel') {
+                    s.classList.add('hidden');
+                }
+            });
+        });
+    });
+
+    // Hotspots (Dashboard Only)
     const hotspots = document.querySelectorAll('.hotspot');
     const panel = document.getElementById('module-panel');
     const content = document.getElementById('module-content');
@@ -96,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
         spot.addEventListener('click', () => {
             const moduleId = spot.getAttribute('data-module');
             const data = moduleData[moduleId];
-
             if (data) {
                 content.innerHTML = data.content;
                 panel.classList.remove('hidden');
@@ -108,6 +174,49 @@ document.addEventListener('DOMContentLoaded', () => {
     closeBtn.addEventListener('click', () => {
         panel.classList.remove('active');
         setTimeout(() => panel.classList.add('hidden'), 600);
+    });
+
+    // V-Model Interactions
+    const vSteps = document.querySelectorAll('.v-step');
+    const vInfo = document.getElementById('v-info-panel');
+    vSteps.forEach(step => {
+        step.addEventListener('click', () => {
+            const key = step.getAttribute('data-info');
+            const data = vModelData[key];
+            vInfo.innerHTML = `<h3>${data.title}</h3><p style="margin-top:10px">${data.content}</p>`;
+            gsap.from(vInfo, { scale: 0.95, opacity: 0.8, duration: 0.3 });
+        });
+    });
+
+    // Vault Implementation
+    const vaultGrid = document.getElementById('vaultGrid');
+    const vaultSearch = document.getElementById('vaultSearch');
+
+    function renderVault(filter = '') {
+        vaultGrid.innerHTML = '';
+        vaultSkills
+            .filter(s => s.name.toLowerCase().includes(filter.toLowerCase()) || s.desc.toLowerCase().includes(filter.toLowerCase()))
+            .forEach(skill => {
+                const card = document.createElement('div');
+                card.className = 'vault-card';
+                card.innerHTML = `<h3>${skill.name}</h3><p>${skill.desc}</p>`;
+                vaultGrid.appendChild(card);
+            });
+    }
+
+    vaultSearch.addEventListener('input', (e) => renderVault(e.target.value));
+    renderVault();
+
+    // HW Points
+    const hwPoints = document.querySelectorAll('.hw-point');
+    const hwInfo = document.getElementById('hw-info');
+    hwPoints.forEach(p => {
+        p.addEventListener('mouseenter', () => {
+            const type = p.getAttribute('data-hw');
+            if (type === 'cpu') hwInfo.innerHTML = "<h3>Main CPU</h3><p>Dual-core Lockstep R52 processor. Executes steering/braking algorithms with real-time safety monitoring.</p>";
+            if (type === 'pmic') hwInfo.innerHTML = "<h3>Power Management</h3><p>Monitors voltage rails and handles graceful shutdown/fail-safe transitions.</p>";
+            if (type === 'comms') hwInfo.innerHTML = "<h3>Network I/O</h3><p>CAN-FD and Automotive Ethernet for high-speed ADAS object communication.</p>";
+        });
     });
 
     // Initial animations
